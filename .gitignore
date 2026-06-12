@@ -1,37 +1,7 @@
 # Dependências
 node_modules/
 package-lock.json
-yarn.lock
+
 
 # Arquivos de ambiente
 .env
-.env.local
-.env.production
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Sistema operacional
-.DS_Store
-Thumbs.db
-
-# Build
-dist/
-build/
-*.cache
-
-# Angular
-frontend/.angular/
-frontend/dist/
-
-# Banco de dados
-*.sqlite
-*.db
