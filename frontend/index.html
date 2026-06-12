@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Gerenciamento De Frotas</title>
+</head>
+
+<body>
+
+    <main>
+        <div class="metodos">
+            <button id="adcionarVeiculo"><a href="index.html">Adicionar Veiculo</a></button>
+            <button id="listarVeiculos">Listar Veiculos</button>
+            <button id="disponiveis">Disponiveis</button>
+            <button id="receitaPotencial" onclick="receitaPotencial()">Receita Potencial</button>
+        </div>
+        <div id="content">
+            <h3>Adicionar Veiculo</h3>
+            <div class="card-cadastro">
+                <form id="form" class="form-cadastro">
+                    <input type="text" id="modelo" placeholder="Modelo...">
+                    <span id="errorModelo"></span>
+                    <select id="marcas" required>
+                        <option value="">Marca</option>
+                        <option value="1">Toyota</option>
+                        <option value="2">Honda</option>
+                        <option value="3">Volkswagen</option>
+                    </select>
+                    <select id="categorias" required>
+                        <option value="">Categoria</option>
+                        <option value="1">Sedan’</option>
+                        <option value="2">SUV</option>
+                        <option value="3">Hatchback</option>
+                    </select>
+                    <input type="number" id="ano" placeholder="Ano...">
+                    <span id="errorAno"></span>
+                    <input type="number" id="precoDiaria" placeholder="Preço Diaria...">
+                    <span id="errorPrecoDiaria"></span>
+                    <select id="disponibilidade">
+                        <option value="Disponivel">Disponivel</option>
+                        <option value="Indisponivel">Indisponivel</option>
+                    </select>
+                    <button id="btn-salvar">Salvar</button>
+                    <span id="sussMsg"></span>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
