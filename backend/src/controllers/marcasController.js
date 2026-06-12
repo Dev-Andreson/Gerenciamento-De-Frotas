@@ -25,9 +25,14 @@ async function criar(req, res) {
 async function listar(req, res) {
   try {
     const marca = await model.listar_marcas();
-    if (!marca || marca.length === 0) {
-      return res.status(400).json({ erro: "Lista de marcas vazia" });
+
+    if (!marca) {
+      return res.status(400).json({ erro: "Nenhuma marca encontrada" });
     }
+    if (marca.length === 0) {
+      return res.status(200).json({ erro: "Lista de marcas vazia" });
+    }
+
     res.status(200).json(marca);
   } catch (error) {
     console.error("Erro ao listar marcas", error);
@@ -47,6 +52,13 @@ async function listar_por_nome(req, res) {
 
     const marca = await model.listar_marcas_nome(validacao.valor);
 
+    if (!marca) {
+      return res.status(400).json({ erro: "Marca indefinida" });
+    }
+    if (marca.length === 0) {
+      return res.status(200).json({ erro: "Nenhuma marca encontrada" });
+    }
+
     res.status(200).json(marca);
   } catch (error) {
     console.error("Erro ao listar marcas", error);
@@ -56,25 +68,90 @@ async function listar_por_nome(req, res) {
 }
 
 async function listar_por_id(req, res) {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  const marca = await model.listar_marcas_id(id);
-  res.status(200).json(marca);
+    const marca = await model.listar_marcas_id(id);
+
+    if (!marca) {
+      return res.status(400).json({ erro: "Marca indefinida" });
+    }
+    if (marca.length === 0) {
+      return res.status(200).json({ erro: "Marca não encontrada" });
+    }
+
+    res.status(200).json(marca);
+  } catch (error) {
+    console.error("Erro ao listar marca", error);
+    res.status(500).json({ erro: "Erro no servidor" });
+  }
 }
 
 async function alterar(req, res) {
-  const id = req.params.id;
-  const { nome } = req.body;
+  try {
+    const id = req.params.id;
+    const { nome } = req.body;
 
-  const marca = await model.alterar_marca(id, nome);
-  res.status(200).json({ mensagem: "Marca alterada" });
+    const validarId = validador.validarId(id);
+
+    if (!validarId.valido) {
+      return res.status(400).json(validarId);
+    }
+
+    const validarMarca = validador.validarMarca(nome);
+
+    if (!validarMarca.valido) {
+      return res.status(400).json(validarMarca);
+    }
+
+    const marca = await model.listar_marcas_id(id);
+
+    if (!marca) {
+      return res.status(400).json({ erro: "Marca indefinida" });
+    }
+    if (marca.length === 0) {
+      return res
+        .status(200)
+        .json({ erro: "Nenhuma marca encontrada com esse id" });
+    }
+
+    const alterMarca = await model.alterar_marca(id, nome);
+
+    res.status(200).json({ mensagem: "Marca alterada" });
+  } catch (error) {
+    console.error("Erro ao alterar marca", error);
+    if (error.code === "23505") {
+      return res.status(500).json({ erro: "Marca já existe" });
+    }
+    res.status(500).json({ erro: "Erro no servidor" });
+  }
 }
 
 async function deletar(req, res) {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  const marca = await model.deletar_marca(id);
-  res.status(200).json({ mensagem: "Marca excluiada" });
+    const validarId = validador.validarId(id);
+
+    if (!validarId.valido) {
+      return res.status(400).json(validarId);
+    }
+
+    const marca = await model.listar_marcas_id(id)
+
+    if(!marca){
+      return res.status(400).json({erro: "Marca indefinida"})
+    }
+    if(marca.length === 0){
+      return res.status(200).json({erro: "Nenhuma marca encontrada com esse id"})
+    }
+
+    const marca = await model.deletar_marca(id);
+    res.status(200).json({ mensagem: "Marca excluiada" });
+  } catch (error) {
+    console.error("Erro ao deletar marca", error);
+    res.status(500).json({ erro: "Erro no servidor" });
+  }
 }
 
 module.exports = {

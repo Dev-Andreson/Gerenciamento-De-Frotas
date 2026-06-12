@@ -25,9 +25,14 @@ async function criar(req, res) {
 async function listar(req, res) {
   try {
     const categorias = await model.listar_categorias();
+
     if (!categorias) {
-      return res.status(404).json({ erro: "Nenhuma categoria encontrada" });
+      return res.status(404).json({ erro: "Categoria não encontrada" });
     }
+    if (categorias.length === 0) {
+      return res.status(200).json({ erro: "Categoria não encontrada" });
+    }
+
     res.status(200).json(categorias);
   } catch (error) {
     console.error("Erro ao listar categorias", error);
@@ -42,6 +47,14 @@ async function listar_por_id(req, res) {
     const validacao = validador.validarId(id);
 
     const categoria = await model.listar_categorias_id(validacao.valor);
+
+    if (!categoria) {
+      return res.status(404).json({ erro: "Categoria não encontrada" });
+    }
+    if (categoria.length === 0) {
+      return res.status(200).json({ erro: "Categoria não encontrada" });
+    }
+
     res.status(200).json(categoria);
   } catch (error) {
     console.error("Erro ao listar por id", error);
@@ -57,7 +70,16 @@ async function alterar(req, res) {
     const { descricao } = req.body;
     const validacaoDes = validador.validarCategoria(descricao);
 
-    const categoria = await model.alterar_categoria(
+    const categoria = await model.listar_categorias_id(id);
+
+    if (!categoria) {
+      return res.status(404).json({ erro: "Categoria não encontrada" });
+    }
+    if (categoria.length === 0) {
+      return res.status(200).json({ erro: "Categoria não encontrada" });
+    }
+
+    const categoriaEditada = await model.alterar_categoria(
       validacaoId.valor,
       validacaoDes.valor,
     );
@@ -71,10 +93,13 @@ async function alterar(req, res) {
 async function deletar(req, res) {
   try {
     const id = req.params.id;
-
     const verificar = await model.listar_categorias_id(id);
-    if (!verificar || verificar.length === 0) {
+
+    if (!verificar) {
       return res.status(404).json({ erro: "Categoria não encontrada" });
+    }
+    if (verificar.length === 0) {
+      return res.status(200).json({ erro: "Categoria não encontrada" });
     }
 
     const deletar = await model.deletar_categoria(id);

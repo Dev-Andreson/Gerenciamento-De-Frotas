@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="navbar-brand">🚗 Locadora de Veículos</div>
+  <div class="navbar-menu">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/veiculos" routerLinkActive="active">Veículos</a>
+    <a routerLink="/marcas" routerLinkActive="active">Marcas</a>
+    <a routerLink="/categorias" routerLinkActive="active">Categorias</a>
+  </div>
+  <div class="navbar-user">
+    <span>Usuário</span>
+    <button (click)="logout()" class="btn-sair">Sair</button>
+  </div>
+</nav>

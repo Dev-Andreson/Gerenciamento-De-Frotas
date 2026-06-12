@@ -1,0 +1,36 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>🚗 Locadora de Veículos</h2>
+      <p>Faça login para acessar o sistema</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" [(ngModel)]="credentials.email" #email="ngModel" class="form-control" required email placeholder="Digite seu e-mail" />
+        <div class="error-message" *ngIf="email.invalid && email.touched">
+          <span *ngIf="email.errors?.['required']">E-mail é obrigatório</span>
+          <span *ngIf="email.errors?.['email']">E-mail inválido</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" [(ngModel)]="credentials.senha" #senha="ngModel" class="form-control" required minlength="6" placeholder="Digite sua senha" />
+        <div class="error-message" *ngIf="senha.invalid && senha.touched">
+          <span *ngIf="senha.errors?.['required']">Senha é obrigatória</span>
+          <span *ngIf="senha.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <div class="error-message text-center" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>

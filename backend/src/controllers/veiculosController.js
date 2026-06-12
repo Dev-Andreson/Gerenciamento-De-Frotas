@@ -52,8 +52,11 @@ async function listar(req, res) {
 
     const veiculos = await model.listar_veiculos(limit, offset);
 
-    if (!veiculos || veiculos.length === 0) {
-      return res.status(404).json({ erro: "Lista de veiculos vazia" });
+    if (!veiculos) {
+      return res.status(404).json({ erro: "Lista de veiculos indefinida" });
+    }
+    if (veiculos.length === 0) {
+      return res.status(200).json({ erro: "Lista de veiculos vazia" });
     }
 
     const total = await model.contar_veiculos();
@@ -107,11 +110,17 @@ async function listar_por_modelo(req, res) {
     if (!modelo) {
       return res.status(404).json({ erro: "Modelo invalido" });
     }
+    if (modelo.length === 0) {
+      return res.status(404).json({ erro: "Digite um modelo" });
+    }
 
     const veiculo = await model.listar_veiculos_modelo(modelo);
 
-    if (!veiculo || veiculo.length === 0) {
-      return res.status(404).json({ erro: "Veiculo não encontrado" });
+    if (!veiculo) {
+      return res.status(404).json({ erro: "Veiculo indefinido" });
+    }
+    if (veiculo.length === 0) {
+      return res.status(200).json({ erro: "Nenhuma veiculo encontrado" });
     }
 
     res.status(200).json(veiculo);
@@ -125,8 +134,11 @@ async function listar_disponiveis(req, res) {
   try {
     const veiculo = await model.listar_veiculos_disponiveis();
 
-    if (!veiculo || veiculo.length === 0) {
+    if (!veiculo) {
       return res.status(404).json({ erro: "Veiculos não encontrados" });
+    }
+    if (veiculo.length === 0) {
+      return res.status(200).json({ erro: "Nenhum veiculo disponivel" });
     }
 
     res.status(200).json(veiculo);
@@ -202,8 +214,11 @@ async function deletar(req, res) {
     const id = req.params.id;
 
     const veiculoExistente = await model.listar_veiculos_id(id);
-    if (!veiculoExistente || veiculoExistente.length === 0) {
+    if (!veiculoExistente) {
       return res.status(404).json({ erro: "Veiculo não encontrado" });
+    }
+    if (veiculo.length === 0) {
+      return res.status(200).json({ erro: "Nenhum veiculo encontrado" });
     }
 
     const veiculo = await model.deletar_veiculo(id);
