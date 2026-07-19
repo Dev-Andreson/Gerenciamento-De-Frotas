@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing-module';
 import { AppComponent } from './app';
 
+// Importar TODOS os componentes
 import { Login } from './components/login/login';
 import { Registro } from './components/registro/registro';
 import { Dashboard } from './components/dashboard/dashboard';
@@ -13,6 +14,7 @@ import { Marcas } from './components/marcas/marcas';
 import { Categorias } from './components/categorias/categorias';
 import { Navbar } from './components/navbar/navbar';
 
+// Importar o Interceptor
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
