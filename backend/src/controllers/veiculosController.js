@@ -217,7 +217,7 @@ async function deletar(req, res) {
     if (!veiculoExistente) {
       return res.status(404).json({ erro: "Veiculo não encontrado" });
     }
-    if (veiculo.length === 0) {
+    if (veiculoExistente.length === 0) {
       return res.status(200).json({ erro: "Nenhum veiculo encontrado" });
     }
 

@@ -1,29 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
-// Rotas - atenção: o nome do arquivo é app-routing-module.ts
 import { AppRoutingModule } from './app-routing-module';
-
-// Componente principal - atenção: o nome do arquivo é app.ts
 import { AppComponent } from './app';
 
-// Importar os componentes
 import { Login } from './components/login/login';
+import { Registro } from './components/registro/registro';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Veiculos } from './components/veiculos/veiculos';
 import { Marcas } from './components/marcas/marcas';
 import { Categorias } from './components/categorias/categorias';
 import { Navbar } from './components/navbar/navbar';
 
-// Importar o Interceptor
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     Login,
+    Registro,
     Dashboard,
     Veiculos,
     Marcas,
@@ -33,8 +30,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,  // <-- Para chamadas HTTP
-    FormsModule        // <-- Para usar ngModel nos formulários
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     {

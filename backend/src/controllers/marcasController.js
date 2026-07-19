@@ -146,7 +146,7 @@ async function deletar(req, res) {
       return res.status(200).json({erro: "Nenhuma marca encontrada com esse id"})
     }
 
-    const marca = await model.deletar_marca(id);
+    const deletarMarca = await model.deletar_marca(id);
     res.status(200).json({ mensagem: "Marca excluiada" });
   } catch (error) {
     console.error("Erro ao deletar marca", error);

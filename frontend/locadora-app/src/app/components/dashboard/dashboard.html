@@ -3,20 +3,38 @@
   <p>Bem-vindo ao sistema de gerenciamento de frotas!</p>
 
   <div class="cards">
-    <div class="card"><h3>🚗 Veículos</h3><p class="numero">{{ totalVeiculos }}</p></div>
-    <div class="card"><h3>🏭 Marcas</h3><p class="numero">{{ totalMarcas }}</p></div>
-    <div class="card"><h3>📁 Categorias</h3><p class="numero">{{ totalCategorias }}</p></div>
+    <div class="card">
+      <h3>🚗 Veículos</h3>
+      <p class="numero">{{ totalVeiculos }}</p>
+    </div>
+    <div class="card">
+      <h3>🏭 Marcas</h3>
+      <p class="numero">{{ totalMarcas }}</p>
+    </div>
+    <div class="card">
+      <h3>📁 Categorias</h3>
+      <p class="numero">{{ totalCategorias }}</p>
+    </div>
   </div>
 
   <div class="ultimos-veiculos">
     <h2>Últimos Veículos Cadastrados</h2>
-    <table>
-      <thead><tr><th>ID</th><th>Modelo</th><th>Marca</th><th>Categoria</th><th>Ano</th><th>Preço</th></tr></thead>
+    <table class="tabela">
+      <thead>
+        <tr><th>ID</th><th>Modelo</th><th>Marca</th><th>Categoria</th><th>Ano</th><th>Preço</th></tr>
+      </thead>
       <tbody>
         <tr *ngFor="let veiculo of ultimosVeiculos">
-          <td>{{ veiculo.id }}</td><td>{{ veiculo.modelo }}</td><td>{{ veiculo.nome }}</td><td>{{ veiculo.descricao }}</td><td>{{ veiculo.ano }}</td><td>R$ {{ veiculo.preco_diaria }}</td>
+          <td>{{ veiculo.id }}</td>
+          <td>{{ veiculo.modelo }}</td>
+          <td>{{ veiculo.nome }}</td>
+          <td>{{ veiculo.descricao }}</td>
+          <td>{{ veiculo.ano }}</td>
+          <td>R$ {{ veiculo.preco_diaria }}</td>
         </tr>
-        <tr *ngIf="ultimosVeiculos.length === 0"><td colspan="6">Nenhum veículo cadastrado</td></tr>
+        <tr *ngIf="ultimosVeiculos.length === 0">
+          <td colspan="6">Nenhum veículo cadastrado</td>
+        </tr>
       </tbody>
     </table>
   </div>

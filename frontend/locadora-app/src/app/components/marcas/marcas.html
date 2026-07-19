@@ -1,4 +1,63 @@
 <div class="marcas-container">
-  <h1>Gerenciar Marcas</h1>
-  <p>Em breve - Listagem e CRUD de marcas</p>
+  <div class="header">
+    <h1>Gerenciar Marcas</h1>
+    <button *ngIf="isAdmin" class="btn-primary" (click)="abrirFormulario()">+ Nova Marca</button>
+  </div>
+
+  <!-- Campo de Busca -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      [(ngModel)]="termoBusca" 
+      (input)="aplicarFiltro()"
+      placeholder="🔍 Buscar por nome da marca..."
+      class="search-input"
+    />
+    <button *ngIf="termoBusca" class="btn-clear" (click)="limparBusca()">✖</button>
+  </div>
+
+  <!-- Formulário de Cadastro/Edição -->
+  <div class="form-modal" *ngIf="showForm">
+    <div class="form-card">
+      <h2>{{ marcaEditando ? 'Editar Marca' : 'Nova Marca' }}</h2>
+      
+      <div class="form-group">
+        <label>Nome da Marca</label>
+        <input type="text" [(ngModel)]="novaMarca.nome" placeholder="Ex: Toyota, Honda, Volkswagen" />
+      </div>
+
+      <div class="form-buttons">
+        <button class="btn-save" (click)="salvarMarca()" [disabled]="isLoading">
+          {{ isLoading ? 'Salvando...' : 'Salvar' }}
+        </button>
+        <button class="btn-cancel" (click)="fecharFormulario()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Marcas -->
+  <div class="table-container">
+    <table class="marcas-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th *ngIf="isAdmin">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let marca of marcasFiltradas">
+          <td>{{ marca.id }}</td>
+          <td>{{ marca.nome }}</td>
+          <td class="acoes" *ngIf="isAdmin">
+            <button class="btn-edit" (click)="editarMarca(marca)">✏️ Editar</button>
+            <button class="btn-delete" (click)="excluirMarca(marca.id)">🗑️ Excluir</button>
+          </td>
+        </tr>
+        <tr *ngIf="marcasFiltradas.length === 0">
+          <td [attr.colspan]="isAdmin ? 3 : 2">Nenhuma marca encontrada</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

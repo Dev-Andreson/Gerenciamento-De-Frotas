@@ -1,4 +1,158 @@
 <div class="veiculos-container">
-  <h1>Gerenciar Veículos</h1>
-  <p>Em breve - Listagem e CRUD de veículos</p>
+  <div class="header">
+    <h1>Gerenciar Veículos</h1>
+    <button *ngIf="isAdmin" class="btn-primary" (click)="abrirFormulario()">+ Novo Veículo</button>
+  </div>
+
+  <!-- Campo de Busca por Modelo -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      [(ngModel)]="termoBusca" 
+      (input)="aplicarFiltros()"
+      placeholder="🔍 Buscar por modelo..."
+      class="search-input"
+    />
+    <button *ngIf="termoBusca" class="btn-clear" (click)="limparBusca()">✖</button>
+  </div>
+
+  <!-- Filtros de Preço e Ano -->
+  <div class="filtros">
+    <div class="filtro-group">
+      <label>Preço Min (R$)</label>
+      <input 
+        type="number" 
+        [(ngModel)]="filtroPrecoMin" 
+        (input)="aplicarFiltros()"
+        placeholder="Mínimo"
+        class="filtro-input"
+      />
+    </div>
+    <div class="filtro-group">
+      <label>Preço Max (R$)</label>
+      <input 
+        type="number" 
+        [(ngModel)]="filtroPrecoMax" 
+        (input)="aplicarFiltros()"
+        placeholder="Máximo"
+        class="filtro-input"
+      />
+    </div>
+    <div class="filtro-group">
+      <label>Ano</label>
+      <input 
+        type="number" 
+        [(ngModel)]="filtroAno" 
+        (input)="aplicarFiltros()"
+        placeholder="Ano"
+        class="filtro-input"
+      />
+    </div>
+    <button class="btn-limpar-filtros" (click)="limparTodosFiltros()">Limpar Filtros</button>
+  </div>
+
+  <!-- Formulário de Cadastro/Edição -->
+  <div class="form-modal" *ngIf="showForm">
+    <div class="form-card">
+      <h2>{{ veiculoEditando ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
+      
+      <div class="form-group">
+        <label>Modelo</label>
+        <input type="text" [(ngModel)]="novoVeiculo.modelo" placeholder="Ex: Corolla" />
+      </div>
+
+      <div class="form-group">
+        <label>Ano</label>
+        <input type="number" [(ngModel)]="novoVeiculo.ano" placeholder="Ex: 2020" />
+      </div>
+
+      <div class="form-group">
+        <label>Preço Diária (R$)</label>
+        <input type="number" [(ngModel)]="novoVeiculo.preco_diaria" placeholder="Ex: 150" />
+      </div>
+
+      <div class="form-group">
+        <label>Disponibilidade</label>
+        <select [(ngModel)]="novoVeiculo.disponibilidade">
+          <option value="Disponivel">Disponível</option>
+          <option value="Indisponivel">Indisponível</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Marca</label>
+        <select [(ngModel)]="novoVeiculo.id_marca">
+          <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nome }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Categoria</label>
+        <select [(ngModel)]="novoVeiculo.id_categoria">
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
+        </select>
+      </div>
+
+      <div class="form-buttons">
+        <button class="btn-save" (click)="salvarVeiculo()" [disabled]="isLoading">
+          {{ isLoading ? 'Salvando...' : 'Salvar' }}
+        </button>
+        <button class="btn-cancel" (click)="fecharFormulario()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Veículos -->
+  <div class="table-container">
+    <table class="veiculos-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Modelo</th>
+          <th>Marca</th>
+          <th>Categoria</th>
+          <th>Ano</th>
+          <th>Preço</th>
+          <th>Status</th>
+          <th *ngIf="isAdmin">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let veiculo of veiculosPaginados">
+          <td>{{ veiculo.id }}</td>
+          <td>{{ veiculo.modelo }}</td>
+          <td>{{ veiculo.nome }}</td>
+          <td>{{ veiculo.descricao }}</td>
+          <td>{{ veiculo.ano }}</td>
+          <td>R$ {{ veiculo.preco_diaria }}</td>
+          <td [class.disponivel]="veiculo.disponibilidade === 'Disponivel'" 
+              [class.indisponivel]="veiculo.disponibilidade === 'Indisponivel'">
+            {{ veiculo.disponibilidade === 'Disponivel' ? 'Disponível' : 'Indisponível' }}
+          </td>
+          <td class="acoes" *ngIf="isAdmin">
+            <button class="btn-edit" (click)="editarVeiculo(veiculo)">✏️ Editar</button>
+            <button class="btn-delete" (click)="excluirVeiculo(veiculo.id)">🗑️ Excluir</button>
+          </td>
+        </tr>
+        <tr *ngIf="veiculosPaginados.length === 0">
+          <td [attr.colspan]="isAdmin ? 8 : 7">Nenhum veículo encontrado</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginação -->
+  <div class="paginacao" *ngIf="totalPaginas > 0">
+    <button class="btn-pagina" (click)="mudarPagina(paginaAtual - 1)" [disabled]="paginaAtual === 1">
+      ◀ Anterior
+    </button>
+    
+    <span class="info-pagina">
+      Página {{ paginaAtual }} de {{ totalPaginas }}
+    </span>
+    
+    <button class="btn-pagina" (click)="mudarPagina(paginaAtual + 1)" [disabled]="paginaAtual === totalPaginas">
+      Próxima ▶
+    </button>
+  </div>
 </div>

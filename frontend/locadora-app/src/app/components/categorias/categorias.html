@@ -1,4 +1,63 @@
 <div class="categorias-container">
-  <h1>Gerenciar Categorias</h1>
-  <p>Em breve - Listagem e CRUD de categorias</p>
+  <div class="header">
+    <h1>Gerenciar Categorias</h1>
+    <button *ngIf="isAdmin" class="btn-primary" (click)="abrirFormulario()">Nova Categoria</button>
+  </div>
+
+  <!-- Campo de Busca -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      [(ngModel)]="termoBusca" 
+      (input)="aplicarFiltro()"
+      placeholder="🔍 Buscar por categoria..."
+      class="search-input"
+    />
+    <button *ngIf="termoBusca" class="btn-clear" (click)="limparBusca()">✖</button>
+  </div>
+
+  <!-- Formulário de Cadastro/Edição -->
+  <div class="form-modal" *ngIf="showForm">
+    <div class="form-card">
+      <h2>{{ categoriaEditando ? 'Editar Categoria' : 'Nova Categoria' }}</h2>
+      
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" [(ngModel)]="novaCategoria.descricao" placeholder="Ex: Sedan, SUV, Hatchback" />
+      </div>
+
+      <div class="form-buttons">
+        <button class="btn-save" (click)="salvarCategoria()" [disabled]="isLoading">
+          {{ isLoading ? 'Salvando...' : 'Salvar' }}
+        </button>
+        <button class="btn-cancel" (click)="fecharFormulario()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Categorias -->
+  <div class="table-container">
+    <table class="categorias-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descrição</th>
+          <th *ngIf="isAdmin">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let categoria of categoriasFiltradas">
+          <td>{{ categoria.id }}</td>
+          <td>{{ categoria.descricao }}</td>
+          <td class="acoes" *ngIf="isAdmin">
+            <button class="btn-edit" (click)="editarCategoria(categoria)">✏️ Editar</button>
+            <button class="btn-delete" (click)="excluirCategoria(categoria.id)">🗑️ Excluir</button>
+          </td>
+        </tr>
+        <tr *ngIf="categoriasFiltradas.length === 0">
+          <td [attr.colspan]="isAdmin ? 3 : 2">Nenhuma categoria encontrada</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -23,7 +23,7 @@ function validarPrecoDiaria(preco) {
     return {
       valido: false,
       campo: "PrecoDiaria",
-      mensagem: "campo o brigatorio",
+      mensagem: "campo obrigatorio",
     };
   }
 
@@ -74,7 +74,9 @@ function validarDisponibilidade(disponivel) {
     };
   }
 
-  if (disponibilidade != "True" && disponibilidade != "False") {
+  // Aceitar os dois formatos
+  if (disponibilidade != "True" && disponibilidade != "False" && 
+      disponibilidade != "Disponivel" && disponibilidade != "Indisponivel") {
     return {
       valido: false,
       campo: "disponibilidade",
@@ -82,7 +84,12 @@ function validarDisponibilidade(disponivel) {
     };
   }
 
-  return { valido: true, valor: disponibilidade };
+  // Converter para o formato esperado pelo backend
+  let valorConvertido = disponibilidade;
+  if (disponibilidade === "Disponivel") valorConvertido = "True";
+  if (disponibilidade === "Indisponivel") valorConvertido = "False";
+
+  return { valido: true, valor: valorConvertido };
 }
 
 async function validarDados(dados) {

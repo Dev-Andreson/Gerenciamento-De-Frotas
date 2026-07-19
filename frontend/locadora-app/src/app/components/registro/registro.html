@@ -1,0 +1,100 @@
+<div class="registro-container">
+  <div class="registro-card">
+    <div class="registro-header">
+      <h2>🚗 Criar Conta</h2>
+      <p>Cadastre-se para acessar o sistema</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #registroForm="ngForm">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input 
+          type="text" 
+          id="nome" 
+          name="nome" 
+          [(ngModel)]="usuario.nome" 
+          #nome="ngModel" 
+          class="form-control" 
+          required 
+          placeholder="Digite seu nome"
+        />
+        <div class="error-message" *ngIf="nome.invalid && nome.touched">
+          <span *ngIf="nome.errors?.['required']">Nome é obrigatório</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          [(ngModel)]="usuario.email" 
+          #email="ngModel" 
+          class="form-control" 
+          required 
+          email 
+          placeholder="Digite seu e-mail"
+        />
+        <div class="error-message" *ngIf="email.invalid && email.touched">
+          <span *ngIf="email.errors?.['required']">E-mail é obrigatório</span>
+          <span *ngIf="email.errors?.['email']">E-mail inválido</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input 
+          type="password" 
+          id="senha" 
+          name="senha" 
+          [(ngModel)]="usuario.senha" 
+          #senha="ngModel" 
+          class="form-control" 
+          required 
+          minlength="6" 
+          placeholder="Mínimo 6 caracteres"
+        />
+        <div class="error-message" *ngIf="senha.invalid && senha.touched">
+          <span *ngIf="senha.errors?.['required']">Senha é obrigatória</span>
+          <span *ngIf="senha.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmarSenha">Confirmar Senha</label>
+        <input 
+          type="password" 
+          id="confirmarSenha" 
+          name="confirmarSenha" 
+          [(ngModel)]="usuario.confirmarSenha" 
+          #confirmarSenha="ngModel" 
+          class="form-control" 
+          required 
+          placeholder="Digite a senha novamente"
+        />
+        <div class="error-message" *ngIf="confirmarSenha.invalid && confirmarSenha.touched">
+          <span *ngIf="confirmarSenha.errors?.['required']">Confirmação é obrigatória</span>
+        </div>
+        <div class="error-message" *ngIf="usuario.senha !== usuario.confirmarSenha && usuario.confirmarSenha">
+          As senhas não coincidem
+        </div>
+      </div>
+
+      <button type="submit" class="btn-registro" [disabled]="registroForm.invalid || isLoading">
+        {{ isLoading ? 'Cadastrando...' : 'Cadastrar' }}
+      </button>
+
+      <div class="error-message text-center" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="success-message text-center" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+
+      <div class="text-center link-login">
+        <p>Já tem uma conta? <a (click)="irParaLogin()">Faça login</a></p>
+      </div>
+    </form>
+  </div>
+</div>

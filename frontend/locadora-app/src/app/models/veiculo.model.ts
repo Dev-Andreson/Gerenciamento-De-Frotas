@@ -6,8 +6,8 @@ export interface Veiculo {
   disponibilidade: string;
   id_marca: number;
   id_categoria: number;
-  nome?: string;      // nome da marca (via join)
-  descricao?: string; // descrição da categoria (via join)
+  nome?: string;
+  descricao?: string; 
 }
 
 export interface VeiculoRequest {

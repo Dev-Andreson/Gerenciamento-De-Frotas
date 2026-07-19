@@ -9,5 +9,6 @@ app.use(express.json());
 require("../src/routes/categoriasRoute")(app);
 require("../src/routes/marcasRoute")(app);
 require("../src/routes/veiculosRoute")(app);
+require("../src/routes/authRoute")(app);
 
 module.exports = { app };

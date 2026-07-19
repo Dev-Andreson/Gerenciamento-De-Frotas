@@ -8,8 +8,8 @@ async function criar_veiculo(
   id_marca,
   id_categoria,
 ) {
-  const sql = `insert into veiculos (modelo, ano, preco_diaria, disponibilidade, id_marca, id_categoria, ativo)
-        values( $1, $2, $3, $4, $5, $6,'true')
+  const sql = `insert into veiculos (modelo, ano, preco_diaria, disponibilidade, id_marca, id_categoria)
+        values( $1, $2, $3, $4, $5, $6)
         returning *`;
   const result = await pool.query(sql, [
     modelo,
@@ -29,7 +29,7 @@ async function contar_veiculos() {
 }
 
 async function listar_veiculos(limit, offset) {
-  const sql = `select veiculos.id, modelo, ano, nome, descricao, preco_diaria, disponibilidade from veiculos
+  const sql = `select veiculos.id, modelo, ano, marcas.nome as nome, categorias.descricao as descricao, preco_diaria, disponibilidade from veiculos
               inner join marcas on veiculos.id_marca = marcas.id
               inner join categorias on veiculos.id_categoria = categorias.id
               where veiculos.ativo = 'true'
@@ -39,7 +39,7 @@ async function listar_veiculos(limit, offset) {
 }
 
 async function listar_veiculos_id(id) {
-  const sql = `select veiculos.id, modelo, nome, descricao, ano, preco_diaria from veiculos
+  const sql = `select veiculos.id, modelo, marcas.nome as nome, categorias.descricao as descricao, ano, preco_diaria from veiculos
             inner join marcas on veiculos.id_marca = marcas.id
             inner join categorias on veiculos.id_categoria = categorias.id
             where veiculos.id = $1 and veiculos.ativo = 'true'`;
@@ -48,7 +48,7 @@ async function listar_veiculos_id(id) {
 }
 
 async function listar_veiculos_modelo(modelo) {
-  const sql = `select veiculos.id, modelo, nome, descricao, ano, preco_diaria from veiculos
+  const sql = `select veiculos.id, modelo, marcas.nome as nome, categorias.descricao as descricao, ano, preco_diaria from veiculos
             inner join marcas on veiculos.id_marca = marcas.id
             inner join categorias on veiculos.id_categoria = categorias.id
             where veiculos.modelo = $1 and veiculos.ativo = 'true'`;
@@ -58,7 +58,7 @@ async function listar_veiculos_modelo(modelo) {
 
 async function listar_veiculos_disponiveis() {
   const sql = `
-            select veiculos.id, modelo, nome, descricao, ano, preco_diaria, disponibilidade from veiculos
+            select veiculos.id, modelo, marcas.nome as nome, categorias.descricao as descricao, ano, preco_diaria, disponibilidade from veiculos
             inner join marcas on veiculos.id_marca = marcas.id
             inner join categorias on veiculos.id_categoria = categorias.id
             where veiculos.disponibilidade = 'Disponivel' and veiculos.ativo = 'true'`;
