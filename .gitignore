@@ -1,37 +1,211 @@
-# Dependências
+# ==============================
+# DEPENDÊNCIAS
+# ==============================
+
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
 
-# Arquivos de ambiente
+# ==============================
+# AMBIENTE E CONFIGURAÇÕES
+# ==============================
+
+# Variáveis de ambiente
 .env
 .env.local
 .env.production
+.env.development
+.env.test
+*.env
+
+# Configurações do backend
+backend/.env
+backend/.env.local
+
+# Configurações do frontend
+frontend/.env
+frontend/.env.local
+
+# ==============================
+# BACKEND (Node.js / Express)
+# ==============================
 
 # Logs
 logs/
 *.log
-npm-debug.log*
+backend/logs/
 
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Sistema operacional
-.DS_Store
-Thumbs.db
-
-# Build
+# Arquivos de build
 dist/
 build/
-*.cache
+backend/dist/
+backend/build/
 
-# Angular
-frontend/.angular/
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+
+# Arquivos de cobertura de teste
+coverage/
+.nyc_output/
+
+# ==============================
+# FRONTEND (Angular)
+# ==============================
+
+# Build do Angular
 frontend/dist/
+frontend/.angular/
+frontend/tmp/
+frontend/out-tsc/
 
-# Banco de dados
-*.sqlite
+# Arquivos de cache
+frontend/.cache/
+frontend/.eslintcache
+
+# Arquivos de teste
+frontend/coverage/
+frontend/.nyc_output/
+
+# ==============================
+# IDE E EDITORES DE CÓDIGO
+# ==============================
+
+# VS Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# IntelliJ / WebStorm / PhpStorm
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# Vim
+*.swp
+*.swo
+*~
+*.un~
+
+# Emacs
+*~
+
+# ==============================
+# SISTEMA OPERACIONAL
+# ==============================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.*.swp
+.*.swo
+*~
+
+# ==============================
+# LOGS E ARQUIVOS TEMPORÁRIOS
+# ==============================
+
+# Logs gerais
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Arquivos temporários do sistema
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ==============================
+# ARQUIVOS DE BANCO DE DADOS
+# ==============================
+
+# SQLite
 *.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# ==============================
+# ARQUIVOS DE DEPLOY E BUILD
+# ==============================
+
+# Arquivos de deploy
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+
+# Docker (arquivos gerados)
+docker-compose.override.yml
+*.dockerignore
+
+# ==============================
+# ARQUIVOS DE TESTE
+# ==============================
+
+# Cobertura de testes
+coverage/
+.nyc_output/
+*.lcov
+*.cov
+
+# ==============================
+# OUTROS
+# ==============================
+
+# Arquivos de configuração pessoal
+*.local
+*.private
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de dados
+*.pem
+*.key
+*.crt
+*.cert
+
+# Arquivos de ambiente do Angular
+frontend/src/environments/environment.prod.ts
+frontend/src/environments/environment.ts

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚗 Locadora de Veículos - Sistema de Gerenciamento
 
 ![Status](https://img.shields.io/badge/status-concluído-brightgreen)
@@ -306,3 +307,7 @@ Este projeto foi desenvolvido como desafio acadêmico e está disponível para f
 [LinkedIn](https://www.linkedin.com/in/andreson-rodrigues-50a915364)
 
 ⭐ Se este projeto te ajudou, deixe uma estrela no repositório!
+=======
+# Gerenciamento-De-Frotas
+Sistema completo de gestão de locadora de veículos - Backend (Node.js/PostgreSQL) + Frontend (Angular)
+>>>>>>> 71a68da75a8ecf20f60cbbdb49cac4c8c0269879
