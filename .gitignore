@@ -206,6 +206,3 @@ coverage/
 *.crt
 *.cert
 
-# Arquivos de ambiente do Angular
-frontend/src/environments/environment.prod.ts
-frontend/src/environments/environment.ts
