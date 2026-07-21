@@ -2,34 +2,34 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VeiculoRequest } from '../models/veiculo.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class VeiculoService {
-  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
   listar(page: number = 1, limit: number = 10): Observable<any> {
     const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
-    return this.http.get(`${this.apiUrl}/veiculos`, { params });
+    return this.http.get(`${environment.apiUrl}/veiculos`, { params });
   }
 
   buscarPorId(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/veiculos/${id}`);
+    return this.http.get(`${environment.apiUrl}/veiculos/${id}`);
   }
 
   criar(veiculo: VeiculoRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/veiculos`, veiculo);
+    return this.http.post(`${environment.apiUrl}/veiculos`, veiculo);
   }
 
   atualizar(id: number, veiculo: VeiculoRequest): Observable<any> {
-    return this.http.put(`${this.apiUrl}/veiculos/editar/${id}`, veiculo);
+    return this.http.put(`${environment.apiUrl}/veiculos/editar/${id}`, veiculo);
   }
 
   deletar(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/veiculos/${id}`);
+    return this.http.delete(`${environment.apiUrl}/veiculos/${id}`);
   }
 }

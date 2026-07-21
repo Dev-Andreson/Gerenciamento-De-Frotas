@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://locadora-api.onrender.com/api'
+  apiUrl: 'https://gerenciamento-de-frotas.onrender.com'
 };

@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService {
-  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/categorias`);
+    return this.http.get(`${environment.apiUrl}/categorias`);
   }
 
   criar(categoria: { descricao: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/categoria`, categoria);
+    return this.http.post(`${environment.apiUrl}/categoria`, categoria);
   }
 
   atualizar(id: number, categoria: { descricao: string }): Observable<any> {
-    return this.http.put(`${this.apiUrl}/categoria/${id}`, categoria);
+    return this.http.put(`${environment.apiUrl}/categoria/${id}`, categoria);
   }
 
   deletar(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/categoria/${id}`);
+    return this.http.delete(`${environment.apiUrl}/categoria/${id}`);
   }
 }
