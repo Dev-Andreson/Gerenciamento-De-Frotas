@@ -23,7 +23,7 @@ export class Navbar implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSubscription = this.authService.auth$.subscribe((usuario: Usuario | null) => {
       this.usuario = usuario;
-      this.isAdmin = usuario?.perfil === 'admin';
+      this.isAdmin = usuario?.perfil === 'administrador';
       console.log('Navbar - usuário atualizado:', this.usuario);
     });
   }
