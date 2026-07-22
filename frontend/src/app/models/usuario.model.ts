@@ -2,7 +2,7 @@ export interface Usuario {
   id: number;
   nome: string;
   email: string;
-  perfil: 'admin' | 'comum';
+  perfil: 'administrador' | 'comum';
 }
 
 export interface LoginResponse {

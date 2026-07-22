@@ -67,6 +67,6 @@ export class AuthService {
 
   isAdmin(): boolean {
     const user = this.getCurrentUser();
-    return user?.perfil === 'admin';
+    return user?.perfil === 'administrador';
   }
 }
