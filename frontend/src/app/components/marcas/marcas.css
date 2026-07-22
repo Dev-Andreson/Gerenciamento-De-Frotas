@@ -13,6 +13,7 @@
 
 h1 {
   color: #333;
+  margin: 0;
 }
 
 .btn-primary {
@@ -23,10 +24,12 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 /* Busca */
@@ -45,11 +48,13 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 25px;
   font-size: 14px;
+  transition: border-color 0.3s ease;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .btn-clear {
@@ -60,6 +65,7 @@ h1 {
   font-size: 16px;
   cursor: pointer;
   color: #999;
+  transition: color 0.2s ease;
 }
 
 .btn-clear:hover {
@@ -78,6 +84,18 @@ h1 {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .form-card {
@@ -86,6 +104,7 @@ h1 {
   border-radius: 16px;
   width: 90%;
   max-width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .form-card h2 {
@@ -110,6 +129,13 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .form-buttons {
@@ -125,6 +151,11 @@ h1 {
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #218838;
 }
 
 .btn-save:disabled {
@@ -139,11 +170,18 @@ h1 {
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #5a6268;
 }
 
 /* Tabela */
 .table-container {
   overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .marcas-table {
@@ -152,7 +190,6 @@ h1 {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .marcas-table thead {
@@ -160,20 +197,38 @@ h1 {
   color: white;
 }
 
-.marcas-table th,
-.marcas-table td {
-  padding: 12px;
+.marcas-table thead th {
+  padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: default;
 }
 
-.marcas-table tr:hover {
-  background-color: #f9f9f9;
+/* CORREÇÃO: Aplica hover APENAS nas linhas de dados */
+.marcas-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.marcas-table tbody tr:hover {
+  background-color: #f0f4ff !important;
+}
+
+.marcas-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.marcas-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .acoes {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .btn-edit {
@@ -184,6 +239,12 @@ h1 {
   border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
 }
 
 .btn-delete {
@@ -194,8 +255,45 @@ h1 {
   border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-edit:hover, .btn-delete:hover {
-  transform: translateY(-1px);
+.btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4);
+}
+
+/* Mensagem de nenhum registro */
+.marcas-table tbody tr td[colspan] {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .btn-clear {
+    left: auto;
+    right: 10px;
+  }
+  
+  .acoes {
+    flex-direction: column;
+  }
+  
+  .marcas-table {
+    font-size: 12px;
+  }
+  
+  .marcas-table th,
+  .marcas-table td {
+    padding: 8px 10px;
+  }
 }
