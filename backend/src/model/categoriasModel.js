@@ -3,7 +3,7 @@ const { pool } = require("../config/db");
 async function criar_categoria(descricao) {
   const sql = `
             insert into categorias ( descricao, ativo )
-            values ( $1, 'true')
+            values ( $1, 'true') 
             RETURNING *
     `;
   const result = await pool.query(sql, [descricao]);

@@ -16,7 +16,7 @@ async function criar(req, res) {
   } catch (error) {
     console.error("Erro ao criar categoria", error);
     if (error.code === "23505") {
-      return res.status(500).json({ erro: "Categoria já existe" });
+      return res.status(409).json({ erro: "Categoria já existe" });
     }
     res.status(500).json({ erro: "Erro no servidor" });
   }

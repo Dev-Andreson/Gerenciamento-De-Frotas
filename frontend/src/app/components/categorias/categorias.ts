@@ -8,22 +8,21 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './categorias.html',
   styleUrl: './categorias.css',
 })
-
 export class Categorias implements OnInit {
   categorias: any[] = [];
   categoriasFiltradas: any[] = [];
   termoBusca: string = '';
-  
+
   categoriaEditando: any = null;
   showForm = false;
   isLoading = false;
   isAdmin: boolean = false;
-  
+
   novaCategoria = { descricao: '' };
 
   constructor(
     private categoriaService: CategoriaService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +40,7 @@ export class Categorias implements OnInit {
       error: (error) => {
         console.error('Erro ao carregar categorias:', error);
         alert('Erro ao carregar lista de categorias');
-      }
+      },
     });
   }
 
@@ -50,10 +49,10 @@ export class Categorias implements OnInit {
       this.categoriasFiltradas = [...this.categorias];
       return;
     }
-    
+
     const termo = this.termoBusca.toLowerCase().trim();
-    this.categoriasFiltradas = this.categorias.filter(categoria => 
-      categoria.descricao.toLowerCase().includes(termo)
+    this.categoriasFiltradas = this.categorias.filter((categoria) =>
+      categoria.descricao.toLowerCase().includes(termo),
     );
   }
 
@@ -104,10 +103,18 @@ export class Categorias implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Erro ao atualizar:', error);
-          alert('Erro ao atualizar categoria');
+          console.error('Erro ao cadastrar:', error);
+
+          if (error.status === 409) {
+            alert(error.error.erro);
+          } else if (error.status === 400) {
+            alert(error.error.erro || 'Dados inválidos.');
+          } else {
+            alert('Erro ao cadastrar categoria.');
+          }
+
           this.isLoading = false;
-        }
+        },
       });
     } else {
       this.categoriaService.criar(this.novaCategoria).subscribe({
@@ -121,7 +128,7 @@ export class Categorias implements OnInit {
           console.error('Erro ao cadastrar:', error);
           alert('Erro ao cadastrar categoria');
           this.isLoading = false;
-        }
+        },
       });
     }
   }
@@ -140,7 +147,7 @@ export class Categorias implements OnInit {
         error: (error) => {
           console.error('Erro ao excluir:', error);
           alert('Erro ao excluir categoria');
-        }
+        },
       });
     }
   }

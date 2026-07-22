@@ -118,6 +118,10 @@ export class Marcas implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao cadastrar:', error);
+
+          if(error.status === 409){
+            alert(error.erro)
+          }
           alert('Erro ao cadastrar marca');
           this.isLoading = false;
         }
