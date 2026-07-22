@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-registro',
@@ -20,7 +22,6 @@ export class Registro {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
-  private apiUrl = 'http://localhost:3000/api';
 
   constructor(
     private authService: AuthService,
@@ -54,7 +55,7 @@ export class Registro {
     this.errorMessage = '';
     this.successMessage = '';
 
-    this.http.post(`${this.apiUrl}/registro`, {
+    this.http.post(`${environment.apiUrl}/registro`, {
       nome: this.usuario.nome,
       email: this.usuario.email,
       senha: this.usuario.senha
