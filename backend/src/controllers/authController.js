@@ -130,7 +130,7 @@ function verificarToken(req, res, next) {
 }
 
 function verificarAdmin(req, res, next) {
-  if (req.usuario.perfil !== "admin") {
+  if (req.usuario.perfil !== "administrador") {
     return res
       .status(403)
       .json({ erro: "Acesso negado. Permissão de administrador necessária." });
