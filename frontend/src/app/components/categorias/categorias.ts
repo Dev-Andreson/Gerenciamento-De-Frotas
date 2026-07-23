@@ -107,7 +107,10 @@ export class Categorias implements OnInit {
 
           if (error.status === 409) {
             alert(error.error.erro);
-            console.log(error.error.erro + error.erro);
+          } else if (error.status === 400) {
+            alert(error.error.erro || 'Dados inválidos.');
+          } else {
+            alert('Erro ao cadastrar categoria.');
           }
 
           this.isLoading = false;
@@ -122,8 +125,13 @@ export class Categorias implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Erro ao cadastrar:', error);
-          alert('Erro ao cadastrar categoria');
+          if (error.status === 409) {
+            alert(error.error.erro);
+          } else if (error.status === 400) {
+            alert(error.error.erro || 'Dados inválidos.');
+          } else {
+            alert('Erro ao cadastrar categoria.');
+          }
           this.isLoading = false;
         },
       });
