@@ -12,17 +12,17 @@ export class Marcas implements OnInit {
   marcas: any[] = [];
   marcasFiltradas: any[] = [];
   termoBusca: string = '';
-  
+
   marcaEditando: any = null;
   showForm = false;
   isLoading = false;
   isAdmin: boolean = false;
-  
+
   novaMarca = { nome: '' };
 
   constructor(
     private marcaService: MarcaService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class Marcas implements OnInit {
       error: (error) => {
         console.error('Erro ao carregar marcas:', error);
         alert('Erro ao carregar lista de marcas');
-      }
+      },
     });
   }
 
@@ -49,11 +49,9 @@ export class Marcas implements OnInit {
       this.marcasFiltradas = [...this.marcas];
       return;
     }
-    
+
     const termo = this.termoBusca.toLowerCase().trim();
-    this.marcasFiltradas = this.marcas.filter(marca => 
-      marca.nome.toLowerCase().includes(termo)
-    );
+    this.marcasFiltradas = this.marcas.filter((marca) => marca.nome.toLowerCase().includes(termo));
   }
 
   limparBusca(): void {
@@ -103,10 +101,15 @@ export class Marcas implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Erro ao atualizar:', error);
-          alert('Erro ao atualizar marca');
+          if (error.status === 409) {
+            alert(error.error.erro);
+          } else if (error.status === 400) {
+            alert(error.error.erro || 'Dados inválidos.');
+          } else {
+            alert('Erro ao cadastrar categoria.');
+          }
           this.isLoading = false;
-        }
+        },
       });
     } else {
       this.marcaService.criar(this.novaMarca).subscribe({
@@ -119,13 +122,15 @@ export class Marcas implements OnInit {
         error: (error) => {
           console.error('Erro ao cadastrar:', error);
 
-          if(error.status === 409){
-            alert(error.error.erro)
+          if (error.status === 409) {
+            alert(error.error.erro);
+          } else if (error.status === 400) {
+            alert(error.error.erro || 'Dados inválidos.');
+          } else {
+            alert('Erro ao cadastrar marca.');
           }
-          
-          alert('Erro ao cadastrar marca');
           this.isLoading = false;
-        }
+        },
       });
     }
   }
@@ -144,7 +149,7 @@ export class Marcas implements OnInit {
         error: (error) => {
           console.error('Erro ao excluir:', error);
           alert('Erro ao excluir marca');
-        }
+        },
       });
     }
   }
