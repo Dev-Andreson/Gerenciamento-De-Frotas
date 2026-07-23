@@ -1,313 +1,507 @@
-<<<<<<< HEAD
-# 🚗 Locadora de Veículos - Sistema de Gerenciamento
+# 🚗 Gerenciamento de Frotas
 
-![Status](https://img.shields.io/badge/status-concluído-brightgreen)
-![Angular](https://img.shields.io/badge/Angular-17-red)
-![Node.js](https://img.shields.io/badge/Node.js-18-green)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-blue)
-![License](https://img.shields.io/badge/license-MIT-yellow)
+<p align="center">
+  Sistema completo para gerenciamento de uma locadora de veículos, desenvolvido com <strong>Angular</strong>, <strong>Node.js</strong> e <strong>PostgreSQL</strong>.
+</p>
 
-Sistema completo de gerenciamento para locadora de veículos com autenticação JWT, controle de perfis (admin/comum) e CRUD completo.
+<p align="center">
+  <img src="https://img.shields.io/badge/status-concluído-brightgreen" alt="Status">
+  <img src="https://img.shields.io/badge/Angular-17-red" alt="Angular">
+  <img src="https://img.shields.io/badge/Node.js-18-green" alt="Node.js">
+  <img src="https://img.shields.io/badge/PostgreSQL-14-blue" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/TypeScript-blue" alt="TypeScript">
+  <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
+</p>
 
-## 📋 Descrição
+---
 
-Este projeto consiste em uma aplicação full-stack para gerenciamento de uma locadora de veículos, desenvolvida como desafio acadêmico. O sistema permite:
+## 📖 Sobre o Projeto
 
-- 🔐 Autenticação segura com JWT
-- 📊 Gerenciamento de veículos, marcas e categorias
-- 👥 Controle de acesso por perfil (Administrador/Comum)
-- 📈 Dashboard com resumos e métricas
-- 🔍 Busca e filtros avançados
-- 📱 Interface responsiva e moderna
+O **Gerenciamento de Frotas** é uma aplicação Full Stack desenvolvida para facilitar o gerenciamento de uma locadora de veículos.
+
+O sistema possui autenticação de usuários, controle de acesso baseado em perfil, gerenciamento de veículos, marcas e categorias, além de um dashboard com informações gerais do sistema.
+
+O projeto foi desenvolvido como parte de um **desafio acadêmico**, utilizando uma arquitetura dividida entre **Frontend** e **Backend**, com comunicação através de uma API REST.
+
+---
+
+## ✨ Funcionalidades
+
+### 🔐 Autenticação e Usuários
+
+* Login de usuários
+* Cadastro de novos usuários
+* Autenticação utilizando JWT
+* Controle de acesso por perfil
+* Proteção de rotas
+* Hash de senhas utilizando bcrypt
+* Expiração do token de autenticação
+
+### 🚗 Gerenciamento de Veículos
+
+* Cadastro de veículos
+* Edição de veículos
+* Exclusão de veículos
+* Listagem de veículos
+* Busca por modelo
+* Filtros por marca e categoria
+* Filtros por preço e ano
+* Controle de disponibilidade
+* Paginação
+
+### 🏷️ Gerenciamento de Marcas
+
+* Cadastro de marcas
+* Edição de marcas
+* Exclusão de marcas
+* Listagem de marcas
+* Busca por nome
+
+### 📂 Gerenciamento de Categorias
+
+* Cadastro de categorias
+* Edição de categorias
+* Exclusão de categorias
+* Listagem de categorias
+* Busca por nome
+
+### 📊 Dashboard
+
+* Visão geral do sistema
+* Resumo dos veículos cadastrados
+* Informações sobre marcas e categorias
+* Métricas gerais da aplicação
+
+### 📱 Interface
+
+* Design responsivo
+* Interface moderna
+* Notificações de sucesso e erro
+* Confirmação antes de exclusões
+
+---
 
 ## 🛠️ Tecnologias Utilizadas
 
-### Backend
-| Tecnologia | Descrição |
-|------------|-----------|
-| Node.js | Runtime JavaScript |
-| Express | Framework web |
-| PostgreSQL | Banco de dados relacional |
-| JWT | Autenticação e autorização |
-| bcrypt | Hash de senhas |
-| CORS | Compartilhamento entre origens |
-
 ### Frontend
-| Tecnologia | Descrição |
-|------------|-----------|
-| Angular 17 | Framework frontend |
-| TypeScript | Superset JavaScript |
-| HTML5 & CSS3 | Estrutura e estilização |
-| RxJS | Programação reativa |
 
-## 📁 Estrutura do Projeto
-locadora-app/
-├── backend/
-│ ├── src/
-│ │ ├── controllers/ # Controladores da aplicação
-│ │ ├── model/ # Modelos de dados
-│ │ ├── routes/ # Rotas da API
-│ │ ├── validators/ # Validações de dados
-│ │ ├── config/ # Configurações (DB, etc)
-│ │ ├── app.js # Configuração do Express
-│ │ └── servidor.js # Ponto de entrada
-│ ├── package.json
-│ └── .env.example # Exemplo de variáveis
+| Tecnologia        | Utilização                                  |
+| ----------------- | ------------------------------------------- |
+| Angular 17        | Framework para desenvolvimento da aplicação |
+| TypeScript        | Linguagem principal                         |
+| HTML5             | Estrutura das páginas                       |
+| CSS3              | Estilização e responsividade                |
+| RxJS              | Programação reativa                         |
+| Angular Router    | Gerenciamento de rotas                      |
+| HTTP Interceptors | Gerenciamento de requisições HTTP           |
+| Route Guards      | Proteção das rotas                          |
+
+### Backend
+
+| Tecnologia | Utilização                             |
+| ---------- | -------------------------------------- |
+| Node.js    | Runtime JavaScript                     |
+| Express.js | Framework para construção da API       |
+| PostgreSQL | Banco de dados relacional              |
+| JWT        | Autenticação e autorização             |
+| bcrypt     | Criptografia de senhas                 |
+| CORS       | Controle de acesso entre origens       |
+| dotenv     | Gerenciamento de variáveis de ambiente |
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+O projeto está dividido em duas aplicações principais:
+
+```text
+Gerenciamento-De-Frotas/
 │
-└── frontend/
-├── src/
-│ ├── app/
-│ │ ├── components/ # Componentes Angular
-│ │ │ ├── login/
-│ │ │ ├── registro/
-│ │ │ ├── dashboard/
-│ │ │ ├── veiculos/
-│ │ │ ├── marcas/
-│ │ │ ├── categorias/
-│ │ │ └── navbar/
-│ │ ├── services/ # Serviços (API, Auth)
-│ │ ├── models/ # Interfaces TypeScript
-│ │ ├── guards/ # Guards de rota
-│ │ ├── interceptors/ # Interceptores HTTP
-│ │ ├── app-module.ts
-│ │ └── app-routing-module.ts
-│ ├── assets/
-│ ├── index.html
-│ └── styles.css
-├── package.json
-└── angular.json
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── model/
+│   │   ├── routes/
+│   │   ├── validators/
+│   │   ├── config/
+│   │   ├── app.js
+│   │   └── servidor.js
+│   │
+│   ├── package.json
+│   └── .env.example
+│
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/
+│   │   │   │   ├── login/
+│   │   │   │   ├── registro/
+│   │   │   │   ├── dashboard/
+│   │   │   │   ├── veiculos/
+│   │   │   │   ├── marcas/
+│   │   │   │   ├── categorias/
+│   │   │   │   └── navbar/
+│   │   │   │
+│   │   │   ├── services/
+│   │   │   ├── models/
+│   │   │   ├── guards/
+│   │   │   ├── interceptors/
+│   │   │   ├── app-module.ts
+│   │   │   └── app-routing-module.ts
+│   │   │
+│   │   ├── assets/
+│   │   ├── index.html
+│   │   └── styles.css
+│   │
+│   ├── package.json
+│   └── angular.json
+│
+└── README.md
+```
 
-text
+---
 
-## 🚀 Como Executar Localmente
+## 🚀 Como Executar o Projeto
 
-### Pré-requisitos
-- Node.js (v18 ou superior)
-- PostgreSQL (v14 ou superior)
-- Angular CLI (v17 ou superior)
+### 📋 Pré-requisitos
 
-### Passo a Passo
+Antes de executar o projeto, certifique-se de ter instalado:
 
-#### 1. Clone o repositório
+* [Node.js](https://nodejs.org/) v18 ou superior
+* [PostgreSQL](https://www.postgresql.org/) v14 ou superior
+* Angular CLI v17 ou superior
+* Git
+
+---
+
+### 1️⃣ Clone o Repositório
+
 ```bash
-git clone https://github.com/seu-usuario/locadora-app.git
-cd locadora-app
-2. Configure o Banco de Dados
-Crie um banco PostgreSQL e execute o script de criação das tabelas:
+git clone https://github.com/Dev-Andreson/Gerenciamento-De-Frotas.git
+```
 
-sql
--- Estrutura básica das tabelas (exemplo)
-CREATE TABLE usuarios (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    senha_hash VARCHAR(255) NOT NULL,
-    perfil VARCHAR(20) DEFAULT 'comum',
-    ativo BOOLEAN DEFAULT true,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+Entre na pasta do projeto:
 
--- ... (demais tabelas: marcas, categorias, veiculos)
-📝 O script completo está disponível na pasta database/schema.sql
+```bash
+cd Gerenciamento-De-Frotas
+```
 
-3. Configurar Backend
-bash
-# Entrar na pasta do backend
+---
+
+### 2️⃣ Configure o Banco de Dados
+
+Crie um banco de dados PostgreSQL para o projeto.
+
+Em seguida, execute os scripts SQL disponíveis no projeto para criação das tabelas e inserção dos dados iniciais.
+
+Exemplo:
+
+```sql
+CREATE DATABASE locadora_db;
+```
+
+> 💡 Certifique-se de que o PostgreSQL esteja em execução antes de iniciar o Backend.
+
+---
+
+### 3️⃣ Configure o Backend
+
+Entre na pasta do Backend:
+
+```bash
 cd backend
+```
 
-# Instalar dependências
+Instale as dependências:
+
+```bash
 npm install
+```
 
-# Criar arquivo .env a partir do exemplo
+Crie um arquivo `.env` baseado no `.env.example`:
+
+```bash
 cp .env.example .env
+```
 
-# Editar o .env com suas configurações
-# DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET
+Configure as variáveis de ambiente:
 
-# Iniciar o servidor
-npm run dev
-4. Configurar Frontend
-bash
-# Entrar na pasta do frontend
-cd frontend
-
-# Instalar dependências
-npm install
-
-# Iniciar o servidor de desenvolvimento
-ng serve
-Acesse http://localhost:4200 no navegador.
-
-👥 Perfis de Usuário
-Administrador
-✅ Acesso completo ao sistema
-
-✅ Pode criar, editar e excluir veículos, marcas e categorias
-
-✅ Visualiza todos os menus
-
-Usuário Comum
-✅ Apenas visualização de dados
-
-❌ Não pode criar, editar ou excluir
-
-✅ Visualiza apenas o Dashboard
-
-⚠️ Para criar um usuário administrador, insira diretamente no banco com perfil = 'admin'
-
-🔒 Segurança
-🔐 Autenticação JWT com expiração de 8 horas
-
-🔑 Senhas hasheadas com bcrypt
-
-🛡️ Proteção de rotas com Guards
-
-🔄 Interceptor para envio automático do token
-
-✅ Validação de dados em todas as entradas
-
-📱 Funcionalidades
-Páginas
-Página	Descrição
-Login	Autenticação de usuários
-Registro	Criação de novas contas
-Dashboard	Visão geral com métricas
-Veículos	CRUD completo com busca e filtros
-Marcas	CRUD completo com busca
-Categorias	CRUD completo com busca
-Recursos
-✅ Paginação na lista de veículos
-
-✅ Busca por modelo, marca e categoria
-
-✅ Filtros por preço e ano
-
-✅ Notificações de sucesso/erro
-
-✅ Confirmação para exclusões
-
-✅ Design responsivo
-
-📡 API Endpoints
-Autenticação
-Método	Endpoint	Descrição	Auth
-POST	/api/login	Login de usuário	❌
-POST	/api/registro	Cadastro de usuário	❌
-Veículos
-Método	Endpoint	Descrição	Auth
-GET	/api/veiculos	Listar veículos (paginado)	✅
-GET	/api/veiculos/:id	Buscar veículo por ID	✅
-GET	/api/veiculo/	Buscar por modelo	✅
-GET	/api/veiculos/disponiveis	Listar disponíveis	✅
-POST	/api/veiculos	Criar veículo	👑
-PUT	/api/veiculos/editar/:id	Atualizar veículo	👑
-DELETE	/api/veiculos/:id	Excluir veículo	👑
-Marcas
-Método	Endpoint	Descrição	Auth
-GET	/api/marcas	Listar marcas	✅
-GET	/api/marcas/:id	Buscar marca por ID	✅
-GET	/api/marca/	Buscar por nome	✅
-POST	/api/marca	Criar marca	👑
-PUT	/api/marca/:id	Atualizar marca	👑
-DELETE	/api/marca/:id	Excluir marca	👑
-Categorias
-Método	Endpoint	Descrição	Auth
-GET	/api/categorias	Listar categorias	✅
-GET	/api/categoria/:id	Buscar categoria por ID	✅
-POST	/api/categoria	Criar categoria	👑
-PUT	/api/categoria/:id	Atualizar categoria	👑
-DELETE	/api/categoria/:id	Excluir categoria	👑
-Legenda:
-
-❌ = Público (sem autenticação)
-
-✅ = Autenticado (qualquer usuário)
-
-👑 = Apenas administradores
-
-🚢 Deploy
-Opções de Deploy
-Serviço	Tipo	Facilidade
-Render + Vercel	Backend + Frontend	⭐⭐⭐
-Railway	Full Stack	⭐⭐⭐⭐⭐
-Netlify + Heroku	Frontend + Backend	⭐⭐⭐⭐
-Deploy no Render (Backend)
-Crie uma conta no Render
-
-Conecte seu repositório GitHub
-
-Selecione "Web Service"
-
-Configure:
-
-Build Command: npm install
-
-Start Command: npm start
-
-Adicione as variáveis de ambiente
-
-Crie um banco PostgreSQL no Render
-
-Deploy no Vercel (Frontend)
-bash
-# Instalar Vercel CLI
-npm install -g vercel
-
-# Fazer deploy
-cd frontend
-vercel --prod
-Deploy no Railway (Full Stack)
-Crie uma conta no Railway
-
-Conecte seu repositório GitHub
-
-Adicione o serviço do backend
-
-Adicione um banco PostgreSQL
-
-Adicione o serviço do frontend
-
-📝 Consulte a documentação completa de deploy para mais detalhes
-
-📋 Variáveis de Ambiente
-Backend (.env)
-env
+```env
 PORT=3000
-DB_HOST=seu_host
+
+DB_HOST=localhost
 DB_PORT=5432
-DB_USER=seu_usuario
+DB_USER=postgres
 DB_PASSWORD=sua_senha
 DB_NAME=locadora_db
+
 JWT_SECRET=seu_jwt_secret
-Frontend (src/environments/environment.ts)
-typescript
+```
+
+Inicie o servidor:
+
+```bash
+npm run dev
+```
+
+O Backend estará disponível em:
+
+```text
+http://localhost:3000
+```
+
+---
+
+### 4️⃣ Configure o Frontend
+
+Abra outro terminal e entre na pasta do Frontend:
+
+```bash
+cd frontend
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Inicie o Angular:
+
+```bash
+ng serve
+```
+
+A aplicação estará disponível em:
+
+```text
+http://localhost:4200
+```
+
+---
+
+## 👥 Perfis de Usuário
+
+O sistema possui dois níveis de acesso:
+
+### 👑 Administrador
+
+Possui acesso completo ao sistema.
+
+* ✅ Visualizar Dashboard
+* ✅ Visualizar veículos
+* ✅ Criar veículos
+* ✅ Editar veículos
+* ✅ Excluir veículos
+* ✅ Gerenciar marcas
+* ✅ Gerenciar categorias
+
+### 👤 Usuário Comum
+
+Possui acesso limitado às funcionalidades do sistema.
+
+* ✅ Visualizar Dashboard
+* ✅ Consultar veículos
+* ✅ Consultar marcas
+* ✅ Consultar categorias
+* ❌ Não pode criar registros
+* ❌ Não pode editar registros
+* ❌ Não pode excluir registros
+
+> ⚠️ O perfil do usuário é definido através do campo `perfil` no banco de dados.
+
+---
+
+## 🔒 Segurança
+
+A aplicação possui mecanismos de segurança para proteger os dados e as funcionalidades do sistema:
+
+* 🔐 Autenticação utilizando JWT
+* ⏱️ Expiração do token de autenticação
+* 🔑 Senhas protegidas com bcrypt
+* 🛡️ Proteção de rotas através de Guards
+* 🔄 HTTP Interceptor para envio automático do token
+* ✅ Validação de dados
+* 🔒 Controle de acesso baseado em perfil
+* 🌐 Configuração de CORS
+
+---
+
+## 📡 API REST
+
+### 🔐 Autenticação
+
+| Método | Endpoint        | Descrição         | Autenticação |
+| ------ | --------------- | ----------------- | ------------ |
+| `POST` | `/api/login`    | Realizar login    | ❌            |
+| `POST` | `/api/registro` | Registrar usuário | ❌            |
+
+### 🚗 Veículos
+
+| Método   | Endpoint                    | Descrição                   | Acesso |
+| -------- | --------------------------- | --------------------------- | ------ |
+| `GET`    | `/api/veiculos`             | Listar veículos             | 🔐     |
+| `GET`    | `/api/veiculos/:id`         | Buscar veículo por ID       | 🔐     |
+| `GET`    | `/api/veiculo/`             | Buscar veículo por modelo   | 🔐     |
+| `GET`    | `/api/veiculos/disponiveis` | Listar veículos disponíveis | 🔐     |
+| `POST`   | `/api/veiculos`             | Criar veículo               | 👑     |
+| `PUT`    | `/api/veiculos/editar/:id`  | Atualizar veículo           | 👑     |
+| `DELETE` | `/api/veiculos/:id`         | Excluir veículo             | 👑     |
+
+### 🏷️ Marcas
+
+| Método   | Endpoint          | Descrição             | Acesso |
+| -------- | ----------------- | --------------------- | ------ |
+| `GET`    | `/api/marcas`     | Listar marcas         | 🔐     |
+| `GET`    | `/api/marcas/:id` | Buscar marca por ID   | 🔐     |
+| `GET`    | `/api/marca/`     | Buscar marca por nome | 🔐     |
+| `POST`   | `/api/marca`      | Criar marca           | 👑     |
+| `PUT`    | `/api/marca/:id`  | Atualizar marca       | 👑     |
+| `DELETE` | `/api/marca/:id`  | Excluir marca         | 👑     |
+
+### 📂 Categorias
+
+| Método   | Endpoint             | Descrição               | Acesso |
+| -------- | -------------------- | ----------------------- | ------ |
+| `GET`    | `/api/categorias`    | Listar categorias       | 🔐     |
+| `GET`    | `/api/categoria/:id` | Buscar categoria por ID | 🔐     |
+| `POST`   | `/api/categoria`     | Criar categoria         | 👑     |
+| `PUT`    | `/api/categoria/:id` | Atualizar categoria     | 👑     |
+| `DELETE` | `/api/categoria/:id` | Excluir categoria       | 👑     |
+
+### 🔑 Legenda
+
+* ❌ Público — Não exige autenticação
+* 🔐 Autenticado — Usuários autenticados
+* 👑 Administrador — Apenas usuários administradores
+
+---
+
+## 🌐 Variáveis de Ambiente
+
+### Backend
+
+Arquivo `.env`:
+
+```env
+PORT=3000
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=sua_senha
+DB_NAME=locadora_db
+
+JWT_SECRET=seu_jwt_secret
+```
+
+### Frontend
+
+Arquivo:
+
+```text
+src/environments/environment.ts
+```
+
+Exemplo:
+
+```typescript
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api'
 };
-⚠️ NUNCA commite arquivos .env ou com credenciais reais!
+```
 
-🤝 Contribuindo
-Faça um fork do projeto
+> ⚠️ **Importante:** Nunca envie arquivos `.env` ou credenciais reais para o GitHub.
 
-Crie uma branch para sua feature (git checkout -b feature/nova-feature)
+---
 
-Commit suas alterações (git commit -m 'Adiciona nova feature')
+## 🚢 Deploy
 
-Push para a branch (git push origin feature/nova-feature)
+O projeto pode ser publicado utilizando diferentes serviços de hospedagem.
 
-Abra um Pull Request
+### Backend
 
-📝 Licença
-Este projeto foi desenvolvido como desafio acadêmico e está disponível para fins educacionais.
+Algumas opções:
 
-👨‍💻 Autor
-**Andreson Rodrigues**  
-[GitHub](https://github.com/Dev-Andreson)  
-[LinkedIn](https://www.linkedin.com/in/andreson-rodrigues-50a915364)
+* Render
+* Railway
+* Heroku
 
-⭐ Se este projeto te ajudou, deixe uma estrela no repositório!
-=======
-# Gerenciamento-De-Frotas
-Sistema completo de gestão de locadora de veículos - Backend (Node.js/PostgreSQL) + Frontend (Angular)
->>>>>>> 71a68da75a8ecf20f60cbbdb49cac4c8c0269879
+### Frontend
+
+Algumas opções:
+
+* Vercel
+* Netlify
+* Firebase Hosting
+
+### Banco de Dados
+
+Algumas opções:
+
+* PostgreSQL no Railway
+* PostgreSQL no Render
+* Supabase
+
+> 💡 Para ambientes de produção, configure corretamente as variáveis de ambiente e altere a URL da API no Frontend.
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas!
+
+Para contribuir:
+
+### 1. Faça um Fork do projeto
+
+### 2. Crie uma nova branch
+
+```bash
+git checkout -b feature/minha-feature
+```
+
+### 3. Faça suas alterações
+
+### 4. Realize o commit
+
+```bash
+git commit -m "Adiciona nova feature"
+```
+
+### 5. Envie para o GitHub
+
+```bash
+git push origin feature/minha-feature
+```
+
+### 6. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido como parte de um **desafio acadêmico** e está disponível para fins educacionais.
+
+---
+
+## 👨‍💻 Autor
+
+### Andreson Rodrigues
+
+Desenvolvedor Full Stack em formação, interessado em desenvolvimento de aplicações web e construção de soluções utilizando tecnologias modernas.
+
+🔗 **GitHub:** [Dev-Andreson](https://github.com/Dev-Andreson)
+
+🔗 **LinkedIn:** [Andreson Rodrigues](https://www.linkedin.com/in/andreson-rodrigues-50a915364)
+
+---
+
+<p align="center">
+  Desenvolvido com 💻 e ☕ por <strong>Andreson Rodrigues</strong>
+</p>
+
+<p align="center">
+  ⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório!
+</p>
