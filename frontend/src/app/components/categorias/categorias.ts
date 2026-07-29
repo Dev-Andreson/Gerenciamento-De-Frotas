@@ -125,6 +125,8 @@ export class Categorias implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
+          console.error('Erro ao cadastrar:', error)
+
           if (error.status === 409) {
             alert(error.error.erro);
           } else if (error.status === 400) {

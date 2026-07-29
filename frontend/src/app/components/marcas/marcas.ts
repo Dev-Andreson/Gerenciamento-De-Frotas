@@ -106,7 +106,7 @@ export class Marcas implements OnInit {
           } else if (error.status === 400) {
             alert(error.error.erro || 'Dados inválidos.');
           } else {
-            alert('Erro ao cadastrar categoria.');
+            alert('Erro ao cadastrar marca.');
           }
           this.isLoading = false;
         },
