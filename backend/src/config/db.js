@@ -8,8 +8,12 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   ssl: {
-    rejectUnauthorized: false // Necessário para o Render
+    rejectUnauthorized: false
   }
 });
 
-module.exports = { pool };
+// Exporta uma função query que usa o pool internamente
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+  pool
+};
