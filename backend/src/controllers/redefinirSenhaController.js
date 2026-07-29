@@ -3,36 +3,49 @@ const usuarioModel = require("../model/usuarioModel");
 const { enviarEmailRecuperacao } = require("../config/email");
 const bcrypt = require('bcrypt'); 
 
-async function redefinirSenha(req, res) {
+const redefinirSenha = async (req, res) => {
   try {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ erro: "Email é obrigatório" });
-
-    const usuario = await usuarioModel.buscarUsuarioPorEmail(email);
     
-    // Retornamos 200 mesmo se não achar o usuário para não revelar dados
-    if (!usuario) {
-      return res.status(200).json({ mensagem: "Se o e-mail estiver cadastrado, você receberá as instruções." });
+    // 1. Verificar se usuário existe
+    const result = await db.query('SELECT id FROM usuarios WHERE email = $1', [email]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
+    const userId = result.rows[0].id;
     const token = uuidv4();
-    await usuarioModel.salvarTokenRecuperacao(email, token);
-    
-    // Tenta enviar o e-mail
-    try {
-      await enviarEmailRecuperacao(email, token);
-    } catch (emailError) {
-      console.error("Erro ao enviar e-mail:", emailError);
-      // Mesmo com erro no e-mail, não revelamos ao usuário
-    }
+    const expiresAt = new Date(Date.now() + 3600000); // 1 hora
 
-    return res.status(200).json({ mensagem: "Se o e-mail estiver cadastrado, você receberá as instruções." });
+    // 2. Salvar token no banco
+    await db.query(
+      'INSERT INTO redefinicoes_senha (user_id, token, expires_at) VALUES ($1, $2, $3) ON CONFLICT (user_id) DO UPDATE SET token = $2, expires_at = $3',
+      [userId, token, expiresAt]
+    );
+
+    // 3. Montar o HTML (O ERRO ESTAVA AQUI)
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+    const link = `${frontendUrl}/recuperar-senha?token=${token}`;
+    
+    // Garanta que esta variável não seja undefined
+    const htmlContent = `
+      <h1>Recuperação de Senha</h1>
+      <p>Clique no link abaixo para redefinir sua senha:</p>
+      <a href="${link}">${link}</a>
+      <p>Este link expira em 1 hora.</p>
+    `;
+
+    // 4. Enviar e-mail
+    await sendEmail(email, 'Redefinição de Senha', htmlContent);
+
+    res.status(200).json({ message: 'E-mail de recuperação enviado com sucesso' });
 
   } catch (error) {
-    console.error("Erro na recuperação de senha:", error);
-    res.status(500).json({ erro: "Erro interno do servidor" });
+    console.error('Erro na redefinição:', error);
+    res.status(500).json({ message: 'Erro interno do servidor' });
   }
-}
+};
+
 
 // Nova função para confirmar o reset com a nova senha
 async function confirmarRedefinicao(req, res) {
