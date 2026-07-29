@@ -1,18 +1,18 @@
-const brevo = require('@getbrevo/brevo');
-
-// Configuração da API Key
-const apiKey = process.env.BREVO_API_KEY;
-
-if (!apiKey) {
-  throw new Error('Variável de ambiente BREVO_API_KEY não definida');
-}
-
 const enviarEmailRecuperacao = async (to, subject, htmlContent) => {
   const apiKey = process.env.BREVO_API_KEY;
+  const senderEmail = process.env.EMAIL_USER; // Deve ser b3bad5001@smtp-brevo.com no .env
+
+  if (!apiKey || !senderEmail) {
+    throw new Error('Configuração de e-mail incompleta. Verifique BREVO_API_KEY e EMAIL_USER');
+  }
+
   const url = 'https://api.brevo.com/v3/smtp/email';
 
   const payload = {
-    sender: { email: process.env.EMAIL_USER, name: 'Sistema' },
+    sender: { 
+      email: senderEmail, 
+      name: 'Sistema de Frotas' 
+    },
     to: [{ email: to }],
     subject: subject,
     htmlContent: htmlContent
@@ -42,7 +42,5 @@ const enviarEmailRecuperacao = async (to, subject, htmlContent) => {
     throw error;
   }
 };
-
-
 
 module.exports = { enviarEmailRecuperacao };
