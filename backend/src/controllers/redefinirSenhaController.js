@@ -1,7 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 const usuarioModel = require("../model/usuarioModel");
 const { enviarEmailRecuperacao } = require("../config/email");
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
+const db = require('../config/db');
+
 
 const redefinirSenha = async (req, res) => {
   try {
