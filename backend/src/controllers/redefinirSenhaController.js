@@ -38,7 +38,7 @@ const redefinirSenha = async (req, res) => {
     `;
 
     // 4. Enviar e-mail
-    await sendEmail(email, 'Redefinição de Senha', htmlContent);
+    await enviarEmailRecuperacao(email, 'Redefinição de Senha', htmlContent);
 
     res.status(200).json({ message: 'E-mail de recuperação enviado com sucesso' });
 
