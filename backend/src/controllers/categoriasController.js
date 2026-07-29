@@ -1,7 +1,7 @@
 const model = require("../model/categoriasModel");
 const validador = require("../validators/validadorCategorias");
 
-async function criar(req, res) {
+async function criar(req, res) {a
   try {
     const { descricao } = req.body;
 

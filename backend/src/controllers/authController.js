@@ -24,10 +24,7 @@ async function login(req, res) {
       return res.status(401).json({ erro: "Email ou senha inválidos" });
     }
 
-    console.log("Senha do banco (hash):", usuario.senha_hash);
-
     const senhaValida = await bcrypt.compare(senha, usuario.senha_hash);
-    console.log("Resultado da comparação:", senhaValida);
 
     if (!senhaValida) {
       console.log("Senha inválida");

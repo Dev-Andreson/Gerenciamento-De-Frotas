@@ -7,23 +7,25 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { Veiculos } from './components/veiculos/veiculos';
 import { Marcas } from './components/marcas/marcas';
 import { Categorias } from './components/categorias/categorias';
+import { RecuperarSenha } from './components/recuperarSenha/recuperarSenha';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: 'login', component: Login },
+  { path: 'recuperar-senha', component: RecuperarSenha },
   { path: 'registro', component: Registro },
   { path: 'dashboard', component: Dashboard, canActivate: [AuthGuard] },
   { path: 'veiculos', component: Veiculos, canActivate: [AuthGuard, AdminGuard] },
   { path: 'marcas', component: Marcas, canActivate: [AuthGuard, AdminGuard] },
   { path: 'categorias', component: Categorias, canActivate: [AuthGuard, AdminGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

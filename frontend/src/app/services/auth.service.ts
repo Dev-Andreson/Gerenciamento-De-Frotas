@@ -8,11 +8,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-
   private tokenKey = 'jwt_token';
   private userKey = 'user_data';
 
-  private authSubject = new BehaviorSubject< Usuario | null>(null);
+  private authSubject = new BehaviorSubject<Usuario | null>(null);
   public auth$ = this.authSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -68,5 +67,13 @@ export class AuthService {
   isAdmin(): boolean {
     const user = this.getCurrentUser();
     return user?.perfil === 'administrador';
+  }
+
+  recuperarSenha(email: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/recuperarSenha`, { email });
+  }
+
+  confirmarRecuperacao(token: string, novaSenha: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/confirmarRecuperacao`, { token, novaSenha });
   }
 }

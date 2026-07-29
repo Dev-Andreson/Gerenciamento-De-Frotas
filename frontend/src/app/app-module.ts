@@ -13,6 +13,7 @@ import { Veiculos } from './components/veiculos/veiculos';
 import { Marcas } from './components/marcas/marcas';
 import { Categorias } from './components/categorias/categorias';
 import { Navbar } from './components/navbar/navbar';
+import { RecuperarSenha } from './components/recuperarSenha/recuperarSenha';
 
 // Importar o Interceptor
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -27,7 +28,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     Veiculos,
     Marcas,
     Categorias,
-    Navbar
+    Navbar,
+    RecuperarSenha
   ],
   imports: [
     BrowserModule,

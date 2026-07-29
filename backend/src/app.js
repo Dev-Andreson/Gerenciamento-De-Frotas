@@ -10,5 +10,6 @@ require("../src/routes/categoriasRoute")(app);
 require("../src/routes/marcasRoute")(app);
 require("../src/routes/veiculosRoute")(app);
 require("../src/routes/authRoute")(app);
+require("../src/routes/redefinirSenhaRouter")(app)
 
 module.exports = { app };

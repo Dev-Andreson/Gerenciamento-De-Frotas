@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>🔒 Recuperação de Senha</h2>
+      <p *ngIf="modo === 'solicitar'">Digite seu e-mail para receber o link</p>
+      <p *ngIf="modo === 'redefinir'">Digite sua nova senha</p>
+    </div>
+
+    <!-- Modo Solicitar E-mail -->
+    <div *ngIf="modo === 'solicitar'">
+      <form (ngSubmit)="solicitarRecuperacao()">
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="seu@email.com" required />
+        </div>
+        <button type="submit" class="btn-login" [disabled]="isLoading">
+          {{ isLoading ? 'Enviando...' : 'Enviar Link' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Modo Redefinir Senha -->
+    <div *ngIf="modo === 'redefinir'">
+      <form (ngSubmit)="confirmarRedefinicao()">
+        <div class="form-group">
+          <label>Nova Senha</label>
+          <input type="password" [(ngModel)]="novaSenha" name="novaSenha" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label>Confirmar Senha</label>
+          <input type="password" [(ngModel)]="confirmarSenha" name="confirmarSenha" class="form-control" required />
+        </div>
+        <button type="submit" class="btn-login" [disabled]="isLoading">
+          {{ isLoading ? 'Alterando...' : 'Alterar Senha' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="error-message text-center" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="text-center" style="color: #27ae60; margin-top: 10px;" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <div class="text-center link-registro">
+      <p><a (click)="irParaLogin()">Voltar para o Login</a></p>
+    </div>
+  </div>
+</div>
