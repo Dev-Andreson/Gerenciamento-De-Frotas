@@ -21,12 +21,12 @@ const redefinirSenha = async (req, res) => {
 
     // 2. Salvar token no banco
     await db.query(
-      'INSERT INTO redefinicoes_senha (user_id, token, expires_at) VALUES ($1, $2, $3) ON CONFLICT (user_id) DO UPDATE SET token = $2, expires_at = $3',
+      'INSERT INTO redefinicoes_senha (user_id, token, expires_at) VALUES ($1, $2, $3) ON CONFLICT (token) DO UPDATE SET expires_at = $3, user_id = $1',
       [userId, token, expiresAt]
     );
 
     // 3. Montar o HTML (O ERRO ESTAVA AQUI)
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+    const frontendUrl = process.env.FRONTEND_URL;
     const link = `${frontendUrl}/recuperar-senha?token=${token}`;
     
     // Garanta que esta variável não seja undefined

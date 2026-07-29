@@ -40,14 +40,14 @@
     <table class="categorias-table">
       <thead>
         <tr>
-          <th>ID</th>
+          
           <th>Descrição</th>
           <th *ngIf="isAdmin">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let categoria of categoriasFiltradas">
-          <td>{{ categoria.id }}</td>
+          
           <td>{{ categoria.descricao }}</td>
           <td class="acoes" *ngIf="isAdmin">
             <button class="btn-edit" (click)="editarCategoria(categoria)">✏️ Editar</button>

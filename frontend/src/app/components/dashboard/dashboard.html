@@ -21,11 +21,11 @@
     <h2>Últimos Veículos Cadastrados</h2>
     <table class="tabela">
       <thead>
-        <tr><th>ID</th><th>Modelo</th><th>Marca</th><th>Categoria</th><th>Ano</th><th>Preço</th></tr>
+        <tr><th>Modelo</th><th>Marca</th><th>Categoria</th><th>Ano</th><th>Preço</th></tr>
       </thead>
       <tbody>
         <tr *ngFor="let veiculo of ultimosVeiculos">
-          <td>{{ veiculo.id }}</td>
+
           <td>{{ veiculo.modelo }}</td>
           <td>{{ veiculo.nome }}</td>
           <td>{{ veiculo.descricao }}</td>

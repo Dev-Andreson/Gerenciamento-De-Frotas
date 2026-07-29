@@ -40,14 +40,14 @@
     <table class="marcas-table">
       <thead>
         <tr>
-          <th>ID</th>
+   
           <th>Nome</th>
           <th *ngIf="isAdmin">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let marca of marcasFiltradas">
-          <td>{{ marca.id }}</td>
+
           <td>{{ marca.nome }}</td>
           <td class="acoes" *ngIf="isAdmin">
             <button class="btn-edit" (click)="editarMarca(marca)">✏️ Editar</button>

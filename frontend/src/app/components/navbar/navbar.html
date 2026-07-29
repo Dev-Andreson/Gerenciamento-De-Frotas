@@ -7,7 +7,7 @@
     <a *ngIf="isAdmin" routerLink="/categorias" routerLinkActive="active">Categorias</a>
   </div>
   <div class="navbar-user" *ngIf="usuario">
-    <span>{{ usuario.nome }} ({{ usuario.perfil }})</span>
+    <span>{{ usuario.nome }}</span>
     <button (click)="logout()" class="btn-sair">Sair</button>
   </div>
 </nav>
