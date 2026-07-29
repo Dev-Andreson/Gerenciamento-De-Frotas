@@ -87,7 +87,7 @@ async function confirmarRedefinicao(req, res) {
     const hash = await bcrypt.hash(novaSenha, salt);
 
     // Atualiza a senha do usuário
-    await db.query('UPDATE usuarios SET password = $1 WHERE id = $2', [hash, user.user_id]);
+    await db.query('UPDATE usuarios SET senha_hash = $1 WHERE id = $2', [hash, user.user_id]);
 
     // Opcional: Invalidar o token após uso (delete ou update)
     await db.query('DELETE FROM redefinicoes_senha WHERE token = $1', [token]);
