@@ -1,17 +1,18 @@
 const nodemailer = require('nodemailer');
 
+
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: 465 ,
-  secure: false, // false para porta 587
+  port: Number(process.env.EMAIL_PORT),
+  secure: false, 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
   }
 });
+
+module.exports = transporter;
+
 
 async function enviarEmailRecuperacao(email, token) {
   const link = `${process.env.FRONTEND_URL}/recuperar-senha?token=${token}`;
