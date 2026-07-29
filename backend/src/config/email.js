@@ -1,28 +1,38 @@
 const brevo = require('@getbrevo/brevo');
 
-let defaultClient = brevo.ApiClient.instance;
+// Configuração da API Key
+const apiKey = process.env.BREVO_API_KEY;
 
-// Configure a chave de API
-let apiKey = defaultClient.authentications['api-key'];
-apiKey.apiKey = process.env.BREVO_API_KEY; // Adicione esta variável no Render
+if (!apiKey) {
+  throw new Error('Variável de ambiente BREVO_API_KEY não definida');
+}
 
-const transactionalApi = new brevo.TransactionalEmailsApi();
+const enviarEmailRecuperacao = async (to, subject, htmlContent) => {
+  // Criação da instância da API de E-mail Transacional
+  const apiInstance = new brevo.TransactionalEmailsApi();
+  
+  // Configura a chave de segurança
+  apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 
-const sendEmail = async (to, subject, htmlContent, senderEmail, senderName) => {
   const emailData = new brevo.SendSmtpEmail();
-  emailData.sender = { email: senderEmail, name: senderName };
+  
+  emailData.sender = { 
+    email: process.env.EMAIL_USER || 'seuemail@dominio.com', 
+    name: 'Suporte Frota' 
+  };
+  
   emailData.to = [{ email: to }];
   emailData.subject = subject;
   emailData.htmlContent = htmlContent;
 
   try {
-    const { response, body } = await transactionalApi.sendTransacEmail(emailData);
-    console.log('E-mail enviado via API Brevo. ID:', body.messageId);
-    return { success: true, messageId: body.messageId };
+    const response = await apiInstance.sendTransacEmail(emailData);
+    console.log('E-mail enviado via Brevo API. ID:', response.body ? response.body.messageId : 'OK');
+    return { success: true };
   } catch (error) {
-    console.error('Erro Brevo API:', error.response ? error.response.text : error.message);
+    console.error('Erro Brevo:', error.response ? error.response.text : error.message);
     throw new Error('Falha no envio de e-mail');
   }
 };
 
-module.exports = { sendEmail };
+module.exports = { enviarEmailRecuperacao };
