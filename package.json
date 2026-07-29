@@ -8,6 +8,7 @@
     "dev": "nodemon src/servidor.js"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^6.0.2",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
